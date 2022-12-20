@@ -5,7 +5,7 @@ window.preload = function () {
 
   p5Inst._predefinedSpriteAnimations = {};
   p5Inst._pauseSpriteAnimationsByDefault = false;
-  var animationListJSON = {"orderedKeys":[],"propsByKey":{}};
+  var animationListJSON = { "orderedKeys": [], "propsByKey": {} };
   var orderedKeys = animationListJSON.orderedKeys;
   var allAnimationsSingleFrame = false;
   orderedKeys.forEach(function (key) {
@@ -13,10 +13,10 @@ window.preload = function () {
     var frameCount = allAnimationsSingleFrame ? 1 : props.frameCount;
     var image = loadImage(props.rootRelativePath, function () {
       var spriteSheet = loadSpriteSheet(
-          image,
-          props.frameSize.x,
-          props.frameSize.y,
-          frameCount
+        image,
+        props.frameSize.x,
+        props.frameSize.y,
+        frameCount
       );
       p5Inst._predefinedSpriteAnimations[props.name] = loadAnimation(spriteSheet);
       p5Inst._predefinedSpriteAnimations[props.name].looping = props.looping;
@@ -32,117 +32,117 @@ window.preload = function () {
         return;
       }
     }
-// -----
+    // -----
 
-var laser1, laser2, edges;
-var treasure,thief;
-function setup() {
-//se crea el sprite del tesoro  y el color 
-  treasure = createSprite(390,10,30,30);
-  treasure.shapeColor="blue";
-  
-  //se crea el ladron 
-  thief= createSprite(10,389,30,30);
-  
-  //se crean los laser su color y velocidad 
-  laser1 = createSprite(100,0,200,5);
-  laser1.shapeColor="red";
-  laser1.velocityY=2;
-  laser1.velocityX=2;
-  
-  laser2 = createSprite(300,400,200,5);
-  laser2.shapeColor="red";
-  laser2.velocityY=-2;
-  laser2.velocityX=-2;
-  
-  //bordes 
-  edges = createEdgeSprites();
-  
-  
-  
+    var laser1, laser2, edges, rightEdge, leftEdge, bottomEdge, topEdge;
+    var treasure, thief;
+    function setup() {
+      //se crea el sprite del tesoro  y el color 
+      treasure = createSprite(390, 10, 30, 30);
+      treasure.shapeColor = "blue";
 
-  
-}
+      //se crea el ladron 
+      thief = createSprite(10, 389, 30, 30);
 
-function draw() {
-  background(220);
-  
-  fill("white");
-  drawSprites();
-  
-  //movimiento del ladron 
-    if(keyDown(RIGHT_ARROW)){
-  thief.velocityX=2;
-  thief.velocityY=0;
-}
-if(keyDown(LEFT_ARROW)){
-  thief.velocityX=-2;
-  thief.velocityY=0;
-}
-if(keyDown(UP_ARROW)){
-  thief.velocityX=0;
-  thief.velocityY=-2;
-}
-if(keyDown(DOWN_ARROW)){
-  thief.velocityX=0;
-  thief.velocityY=2;
-}
+      //se crean los laser su color y velocidad 
+      laser1 = createSprite(100, 0, 200, 5);
+      laser1.shapeColor = "red";
+      laser1.velocityY = 2;
+      laser1.velocityX = 2;
 
-//cuando atrapen el ladron aparece el texto
-if(laser1.isTouching(thief) || laser2.isTouching(thief)){
-    stroke("black"); 
-    fill("yellow");
-    textSize(34); 
-    text("Ladrón atrapado",120,200);
-    
-    //se detiene el movimiento
-    laser1.velocityY=0;
-    laser2.velocityY=0;
-    thief.velocityY=0;
-    thief.velocityX=0;
-  }
-  //cuando el ladron toque el tesoro aparece el texto 
-  if(thief.isTouching(treasure)){
-    stroke("black"); 
-    fill("red");
-    textSize(24); 
-    text("El ladrón consiguió el diamante",20,200);
-    
-    //se detiene el movimiento 
-    laser1.velocityY=0;
-    laser2.velocityY=0;
-    thief.velocityY=0;
-    thief.velocityX=0;
-  }
-  
-  //createEdgeSprites();
-  thief.bounceOff(rightEdge);
-  thief.bounceOff(leftEdge);
-  thief.bounceOff(topEdge);
-  thief.bounceOff(bottomEdge);
+      laser2 = createSprite(300, 400, 200, 5);
+      laser2.shapeColor = "red";
+      laser2.velocityY = -2;
+      laser2.velocityX = -2;
 
-//cuando un laser toque un borde se devuelva 
-if(laser1.isTouching(bottomEdge)){
-    laser1.velocityY=-2;
-    laser1.velocityX=-1;
-  }
-  if(laser1.isTouching(topEdge)){
-    laser1.velocityY=2;
-    laser1.velocityX=1;
-  }
-  if(laser2.isTouching(bottomEdge)){
-    laser2.velocityY=-2;
-    laser2.velocityX=-1;
-  }
-  if(laser2.isTouching(topEdge)){
-    laser2.velocityY=2;
-    laser2.velocityX=1;
-  }
-}
+      //bordes 
+      edges = createEdgeSprites();
 
 
-// -----
-    try { window.draw = draw; } catch (e) {}
+
+
+
+    }
+
+    function draw() {
+      background(220);
+
+      fill("white");
+      drawSprites();
+
+      //movimiento del ladron 
+      if (keyDown(RIGHT_ARROW)) {
+        thief.velocityX = 2;
+        thief.velocityY = 0;
+      }
+      if (keyDown(LEFT_ARROW)) {
+        thief.velocityX = -2;
+        thief.velocityY = 0;
+      }
+      if (keyDown(UP_ARROW)) {
+        thief.velocityX = 0;
+        thief.velocityY = -2;
+      }
+      if (keyDown(DOWN_ARROW)) {
+        thief.velocityX = 0;
+        thief.velocityY = 2;
+      }
+
+      //cuando atrapen el ladron aparece el texto
+      if (laser1.isTouching(thief) || laser2.isTouching(thief)) {
+        stroke("black");
+        fill("yellow");
+        textSize(34);
+        text("Ladrón atrapado", 120, 200);
+
+        //se detiene el movimiento
+        laser1.velocityY = 0;
+        laser2.velocityY = 0;
+        thief.velocityY = 0;
+        thief.velocityX = 0;
+      }
+      //cuando el ladron toque el tesoro aparece el texto 
+      if (thief.isTouching(treasure)) {
+        stroke("black");
+        fill("red");
+        textSize(24);
+        text("El ladrón consiguió el diamante", 20, 200);
+
+        //se detiene el movimiento 
+        laser1.velocityY = 0;
+        laser2.velocityY = 0;
+        thief.velocityY = 0;
+        thief.velocityX = 0;
+      }
+
+      createEdgeSprites();
+      thief.bounceOff(rightEdge);
+      thief.bounceOff(leftEdge);
+      thief.bounceOff(topEdge);
+      thief.bounceOff(bottomEdge);
+
+      //cuando un laser toque un borde se devuelva 
+      if (laser1.isTouching(bottomEdge)) {
+        laser1.velocityY = -2;
+        laser1.velocityX = -1;
+      }
+      if (laser1.isTouching(topEdge)) {
+        laser1.velocityY = 2;
+        laser1.velocityX = 1;
+      }
+      if (laser2.isTouching(bottomEdge)) {
+        laser2.velocityY = -2;
+        laser2.velocityX = -1;
+      }
+      if (laser2.isTouching(topEdge)) {
+        laser2.velocityY = 2;
+        laser2.velocityX = 1;
+      }
+    }
+
+
+    // -----
+    try { window.draw = draw; } catch (e) { }
     switch (stage) {
       case 'preload':
         if (preload !== window.preload) { preload(); }
